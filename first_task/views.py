@@ -42,4 +42,13 @@ def second(request):
     t3 = []
     for i in range(len(t1)):
         t3.append(t1[i].record - t2[i].record)
-    return HttpResponse(f"{t3}")
+    m1 = Records.objects.filter(
+        record_name_id_id=2, date_record__gte=date_a, date_record__lte=date_b
+    )
+    m2 = Records.objects.filter(
+        record_name_id_id=3, date_record__gte=date_a, date_record__lte=date_b
+    )
+    m3 = []
+    for i in range(len(m1)):
+        m3.append(m1[i].record - m2[i].record)
+    return HttpResponse(f"{m3}")
