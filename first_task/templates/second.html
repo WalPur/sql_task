@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Второе задание</title>
+    </head>
+    <body>
+        <h2>
+            http://127.0.0.1:8000/second/?date_a=2021-01-11&date_b=2021-01-12
+        </h2>
+        <h3>date_a - начало отсчета</h3>
+        <h3>date_b - конец отсчета</h3>
+        <table style="border: 1px solid black">
+            <tr>
+                <td>Дата</td>
+                <td>
+                    t1 <br />
+                    °C
+                </td>
+                <td>
+                    t2 <br />
+                    °C
+                </td>
+                <td>
+                    dt <br />
+                    °C
+                </td>
+                <td>
+                    M1 <br />
+                    т
+                </td>
+                <td>
+                    M2 <br />
+                    т
+                </td>
+                <td>
+                    dM <br />
+                    т
+                </td>
+                <td>
+                    Q <br />
+                    Гкал
+                </td>
+                <td>
+                    ВНР <br />
+                    ч
+                </td>
+            </tr>
+            {% for row in answer %}
+            <tr>
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            <tr>
+                {% for item in total %}
+                <td><b>{{ item }}</b></td>
+                {% endfor %}
+            </tr>
+        </table>
+    </body>
+</html>
+<style>
+    td {
+        border: 1px solid black;
+        text-align: center;
+    }
+</style>

@@ -1,7 +1,8 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from .models import Record_names, Records
 from django.db.models import Avg, Sum
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def index(request):
@@ -51,4 +52,26 @@ def second(request):
     m3 = []
     for i in range(len(m1)):
         m3.append(m1[i].record - m2[i].record)
-    return HttpResponse(f"{m3}")
+    q = Records.objects.filter(
+        record_name_id_id=1, date_record__gte=date_a, date_record__lte=date_b
+    )
+    ans = []
+    hours = []
+    for i in range(len(t1)):
+        date = date_a + timedelta(days=i)
+        date = date.strftime("%d.%m.%Y")
+        ans.append([date, t1[i].record, t2[i].record,
+                   t3[i], m1[i].record, m2[i].record, m3[i], q[i].record, '24',])
+        hours.append(24)
+
+    def sum_of(query):
+        a = 0
+        for i in query:
+            a += i.record
+        return a
+    total = [
+        'Итого', sum_of(t1) / len(t1), sum_of(t2) / len(t1), sum(t3) / len(t1),
+        sum_of(m1), sum_of(m2), sum(m3), sum_of(q), sum(hours),
+    ]
+    return render(request, 'second.html', context={'answer': ans, 'total': total})
+    return HttpResponse(f"{ans}")
