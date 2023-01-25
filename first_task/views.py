@@ -1,6 +1,8 @@
+from django.core.mail import send_mail
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Record_names, Records
+from .models import Record_names, Records, Mails
 from django.db.models import Avg, Sum
 from datetime import datetime, timedelta
 
@@ -60,8 +62,19 @@ def second(request):
     for i in range(len(t1)):
         date = date_a + timedelta(days=i)
         date = date.strftime("%d.%m.%Y")
-        ans.append([date, t1[i].record, t2[i].record,
-                   t3[i], m1[i].record, m2[i].record, m3[i], q[i].record, '24',])
+        ans.append(
+            [
+                date,
+                t1[i].record,
+                t2[i].record,
+                t3[i],
+                m1[i].record,
+                m2[i].record,
+                m3[i],
+                q[i].record,
+                "24",
+            ]
+        )
         hours.append(24)
 
     def sum_of(query):
@@ -69,9 +82,37 @@ def second(request):
         for i in query:
             a += i.record
         return a
+
     total = [
-        'Итого', sum_of(t1) / len(t1), sum_of(t2) / len(t1), sum(t3) / len(t1),
-        sum_of(m1), sum_of(m2), sum(m3), sum_of(q), sum(hours),
+        "Итого",
+        sum_of(t1) / len(t1),
+        sum_of(t2) / len(t1),
+        sum(t3) / len(t1),
+        sum_of(m1),
+        sum_of(m2),
+        sum(m3),
+        sum_of(q),
+        sum(hours),
     ]
-    return render(request, 'second.html', context={'answer': ans, 'total': total})
+    return render(request, "second.html", context={"answer": ans, "total": total})
     return HttpResponse(f"{ans}")
+
+
+def third(request):
+    return render(request, "third.html")
+
+
+def third_post(request):
+    subject = request.POST.get("subject")
+    message = request.POST.get("message")
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [
+        request.POST.get("recipient"),
+    ]
+    mail = Mails.objects.create(
+        subject=subject, message=message, recipient=recipient_list[0]
+    )
+    send_mail(subject, message, email_from, recipient_list)
+    mail.is_sent = True
+    mail.save()
+    return HttpResponse(200)

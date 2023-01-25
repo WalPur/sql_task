@@ -15,3 +15,10 @@ class Records(models.Model):
     record = models.FloatField()
     record_diff = models.FloatField()
     period = models.IntegerField()
+
+
+class Mails(models.Model):
+    subject = models.TextField(verbose_name="Email Subject")
+    message = models.TextField()
+    recipient = models.EmailField()
+    is_sent = models.BooleanField(blank=True, default=False)
