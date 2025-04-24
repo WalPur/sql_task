@@ -17,4 +17,4 @@ def send_emails(subject, message, recipient_list):
         mail.is_sent = False
         status = "Письма не были успешно отправлены"
     mail.save()
-    return message
+    return status
