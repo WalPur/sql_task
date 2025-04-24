@@ -1,9 +1,12 @@
 from django.urls import include, path
-from first_task.api.views import RecordsViewSet, first, index, second, third, third_post
+from first_task.api.views import EmailViewSet, RecordsViewSet, second, third, third_post
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register("", RecordsViewSet)
+router.register("second_task", RecordsViewSet)
+router.register("third_task", EmailViewSet)
 urlpatterns = [
-    path("", include(router.urls)),
+    path("api/", include(router.urls)),
+    path("template/second", second),
+    path("template/third", third),
 ]
