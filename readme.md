@@ -31,3 +31,8 @@ docker compose up --build -d
 ```
 docker compose exec web python manage.py migrate --noinput
 ```
+
+## Запуск команд
+
+Для доступа к API имеется возможность использования графической оболочки
+swagger по следующему адресу: `http://localhost:8000/api/schema/swagger`
