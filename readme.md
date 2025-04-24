@@ -36,3 +36,10 @@ docker compose exec web python manage.py migrate --noinput
 
 Для доступа к API имеется возможность использования графической оболочки
 swagger по следующему адресу: `http://localhost:8000/api/schema/swagger`
+
+## Доступ к страницам
+
+Существуют шаблоны страниц по которым имеется возможность перехода.
+
+- `http://localhost:8000/template/second?date_a=2021-01-01&date_b=2021-05-01`
+- `http://localhost:8000/template/third`

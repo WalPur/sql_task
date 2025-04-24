@@ -1,5 +1,5 @@
 from django.urls import include, path
-from first_task.api.views import EmailViewSet, RecordsViewSet, second, third, third_post
+from first_task.api.views import EmailViewSet, RecordsViewSet, second, third
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
