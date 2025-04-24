@@ -1,14 +1,28 @@
-from django.core.mail import send_mail
+from datetime import datetime, timedelta
+
 from django.conf import settings
+from django.core.mail import send_mail
+from django.db.models import Avg, Sum
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Record_names, Records, Mails
-from django.db.models import Avg, Sum
-from datetime import datetime, timedelta
+from first_task.api.serializers import RecordsSerializer
+from first_task.models import Mails, Record_names, Records
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 
 def index(request):
     return HttpResponse("<h2>Главная</h2>")
+
+
+class RecordsViewSet(GenericViewSet):
+    queryset = Records.objects.all()
+    serializer_class = RecordsSerializer
+
+    @action(["GET"], False)
+    def get_table(self, request):
+        return Response("")
 
 
 def first(request):
